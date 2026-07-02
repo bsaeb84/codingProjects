@@ -37,14 +37,20 @@ int main(int argc, char* argv[])
             }
     }
     */
+
+    //The option user's flags stored here
     int opt;
+    //boolean flags for the help, upper and lower case convertion
     int flag_u = 0;
     int flag_h = 0;
+    int flag_l = 0;
+    //set repition numbers
     int n = 1;
-    while ((opt = getopt(argc, argv, "n:uhs")) != -1)
+    while ((opt = getopt(argc, argv, "n:uhsl")) != -1) //while there are flags avaliable
     {
         switch (opt)
         {
+        //get argumnets number next to n flag
         case 'n':
             n = atoi(optarg);
             break;
@@ -52,6 +58,10 @@ int main(int argc, char* argv[])
         case 'u':
             flag_u = 1;
             break;
+
+            case 'l':
+                flag_l = 1;
+                break;
 
         case 'h':
             flag_h = 1;;
@@ -72,6 +82,7 @@ int main(int argc, char* argv[])
 
         //char *message = argv[argc-1];
 
+        //set initial message to nothing
         char *message = NULL;
 
         //if index of the input is less than total of arguments including the flags (this means if there is no flag)
@@ -80,6 +91,7 @@ int main(int argc, char* argv[])
             message = argv[optind];
         }
 
+        //if boolean flag for u is on - convert all characters to upper case
         if (flag_u)
         {
             int j;
@@ -90,10 +102,20 @@ int main(int argc, char* argv[])
 
         }
 
+        //if boolean flag for l is on - convert all characters to lower case
+        if (flag_l) {
+            int l;
+            for (l=0; *(message +l) != '\0'; l++) {
+                *(message + l) = tolower(*(message + l));
+            }
+        }
+
+        //if boolean flag for h is on
         if (flag_h) {
             printf("All commands:\n"
             "-n n(number) (statement) : This repeats your statement n times.\n"
             "-u (statement) : This converts your statement to upper case.\n"
+            "-l (statement) : This converts your statement to lower case.\n"
             "-s : to stop the program.\n"
             "-h : to ask for help for commands.\n");
         }
